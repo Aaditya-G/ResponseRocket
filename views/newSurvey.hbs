@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="../public/css/newSurvey.css">
+    <title>New Survey</title>
+</head>
+<body>
+    {{>navbar}}
+    <div class="container">
+      <div class="row">
+        <div class="col l12 header">
+            Create a new survey
+        </div>
+        <div class="col l12 content">
+            {{#if surveyCreated}}   
+               {{Survey.name}}
+               {{code}}
+               
+       <form action="/newSurvey/" method="GET">
+       <input type="hidden" name="code" value={{code}}>
+       <input type="hidden" name="QuestionType" value="Short">
+        <input type="submit" value="Add a new short question"/>
+       </form>
+  
+
+   <form action="/newSurvey/" method="GET">
+       <input type="hidden" name="code" value={{code}}>
+       <input type="hidden" name="QuestionType" value="MCQ">
+       <input type="submit" value="Add a new MCQ"/>
+      </form>
+
+
+              <form action="/surveyCreated" method="post">
+              <input type="submit" value="create survey"/>
+              </form>
+              {{#ifEquals quest "MCQ"}} 
+                 {{>MCQ}}
+              {{/ifEquals}}
+               {{#ifEquals quest "Short"}} 
+                      <form action="/addnewShort?code={{code}}" method="POST">
+                      <input type="text" name="question" id="" required>
+                      <input type="submit" value="Confirm"/>
+                      </form>
+              {{/ifEquals}}
+              
+            {{else}}
+               {{>addSurvey}}
+            {{/if}}
+      </div>
+    </div>
+</body>
+</html>
