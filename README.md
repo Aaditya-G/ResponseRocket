@@ -8,8 +8,8 @@ in sample.env files , add the variables , add the database key and the sessions 
 
 ## Tech Stack used :
 
--**NodeJS**
--**Express**
--**MongoDB**
--**Handlebars**
--**Materialze**
+-**NodeJS** <br>
+-**Express** <br>
+-**MongoDB** <br>
+-**Handlebars** <br>
+-**Materialze** <br>
