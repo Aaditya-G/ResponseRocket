@@ -3,7 +3,8 @@ const mongoose = require ("mongoose")
 const questionsSchema = new mongoose.Schema({
     surveyCode : String,
     questionType : {type:String , enum : ['MCQ' , 'Short'] },
-    question : String,
+    realQuestion : String,
+    dataQuestion : String,
     options : [{
         "1" : String,
         "2" : String,
@@ -14,8 +15,14 @@ const questionsSchema = new mongoose.Schema({
         "7" : String,
         "8" : String,
 }] , 
-    AnswerRequired: Boolean
+    answerRequired: Boolean,
+    answers: [{
+        check : {type : String , default : "hey"},
+        username : String,
+        answer: String
+    }],
 })
 
 const Question = mongoose.model("question", questionsSchema);
 module.exports = Question;
+ 

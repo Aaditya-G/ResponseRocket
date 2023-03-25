@@ -23,14 +23,17 @@ const ensureLogin = function (req, res, next) {
 
 
 router.get("/" , async (req,res) =>{
-  var welcomeMessage = ""
+  var welcomeMessage = "" 
+  var surveys , log
   if (req.session.userid != null){
-  welcomeMessage  = "Welcome " + req.session.userid;
+  welcomeMessage  = "Welcome, " + req.session.userid;
+  surveys = await Surveys.find({createdBy:req.session.userid})
+  log = true;
   }
   else{
-    welcomeMessage  = "Welcome Guest";
+    welcomeMessage  = "Welcome, Guest";
     }
-   res.render('das' , {welcomeMessage})
+   res.render('das' , {welcomeMessage, surveys , log})
  })
  
 
@@ -94,19 +97,20 @@ router.post('/register' , async (req,res) => {
 
 
 //for showing the create server page 
-router.get('/newSurvey' ,  async (req,res) => {
+router.get('/newSurvey' , ensureLogin, async (req,res) => {
   const Survey =  await Surveys.findOne({code : req.query.code})
   var code = req.query.code
   var quest = req.query.QuestionType
   var surveyCreated = false;
+  console.log(req.query.code)
   if(Survey)
   {
+    var questions = await Questions.find({surveyCode: req.query.code})
     var surveyCreated = true;
   }
   else{
-    
   }
-  res.render('newSurvey' , {surveyCreated , Survey , code , quest})
+  res.render('newSurvey' , {surveyCreated , Survey , code , quest, questions})
 })
 
 
@@ -132,14 +136,68 @@ res.redirect('/newSurvey?code=' + surveyCode)
 
 
 router.post('/addnewShort' ,  async(req,res) => {
-  console.log(req.body.question)
+  const realQuestion = req.body.question
+  const dataQuestion = realQuestion.replace(/ /g,'')
+  const QuestionData = {
+    surveyCode : req.query.code,
+    questionType : "Short",
+    realQuestion : req.body.question,
+    dataQuestion : dataQuestion
+ }
+ await Questions.insertMany([QuestionData])
+   res.redirect('/newSurvey?code=' + req.query.code)
+})
+
+router.post('/addnewMCQ' ,  async(req,res) => {
+  /*console.log(req.body.question)
   const QuestionData = {
     surveyCode : req.query.code,
     questionType : "Short",
     question : req.body.question
  }
- await Questions.insertMany([QuestionData])
+ await Questions.insertMany([QuestionData])*/
    res.redirect('/newSurvey?code=' + req.query.code)
+})
+
+
+router.get("/loadSurvey", ensureLogin, async (req, res) => {
+  const survey = await Surveys.findOne({code:req.query.code})
+  if (survey)
+  {
+    if(survey.createdBy != req.session.userid){
+    questions = await Questions.find({surveyCode:req.query.code})
+    res.render('surveyPage' , {survey , questions} )
+  }
+  else{
+    res.send("cannot answer the survey you created")
+  }
+  }
+  else
+  res.render('surveyDoesNotExist')
+});
+
+
+router.get("/answer" , ensureLogin , async(req,res) =>{
+  console.log(req.query.code, req.query.dataQuestion)
+  await Questions.updateMany({surveyCode : req.query.code,
+  dataQuestion: req.query.dataQuestion , "answers.$.check" : "hey" },
+  {
+    $push:{
+      answers:{
+        username: req.session.userid,
+        answer : req.query.answer
+      }
+    }
+  })
+  res.redirect('/loadsurvey?code=' + req.query.code)
+})
+
+
+router.get("/responseSurvey" , ensureLogin , async(req,res) => {
+  code = req.query.code; 
+  const survey = await Surveys.findOne ({code:code})
+  const questions = await Questions.find({surveyCode:code})
+  res.render('respo' , {survey , questions}) 
 })
 
 

@@ -1,5 +1,76 @@
+:root{
+    --eggplant: #5d4e60ff;
+--mountbatten-pink: #826c7fff;
+--rose-quartz: #a88facff;
+--pink-lavender: #d4b2d8ff;
+--thistle: #efcefaff;
+}
+
+*{
+    font-family: Helvetica;
+}
+
+body{
+    background-color: var(--thistle);
+}
+
+.container{
+    padding: 20px 20px 20px 20px;
+    background-color: var(--rose-quartz);
+}
+
+.typewriter h1 {
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: .15em solid orange; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation: 
+      typing 3.5s steps(40, end),
+      blink-caret .75s step-end infinite;
+  }
+  
+ 
+
+
+  /* The typing effect */
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--thistle) ;}
+  }
+
 .login{
+    font-size:48px;
+     color: var(--eggplant);
     position: relative;
     float:right;
     text-align: right;
+}
+
+
+.newsurvey{
+    font-size: 48px;
+    text-decoration: underline;
+    border-radius: 60px;
+}
+
+.lmao{
+    border-radius: 30px;
+    font-size: 36px;
+}
+
+.surveys{
+    font-size: 48px;
+    color: var(--mountbatten-pink);
+}
+
+.ans{
+    font-size: 36px;
+    border-radius: 30px;
 }

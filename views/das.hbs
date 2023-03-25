@@ -11,15 +11,65 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
 </head>
 <body>
-  {{>navbar}}
+  
+    <div class="navbar-fixed" style="background-color:#efcefaff">
+         <div class="col l6 login">
+      {{#if log}}
+      
+          <div class="c">
+              <a href="/logout" style="color:#5d4e60ff; background-color:#efcefaff">Logout</a>
+          </div> 
+     {{else}}
+     <div class="c">
+      <a href="/login"  style="color:#5d4e60ff; background-color:#efcefaff ">Login</a>
+     
+     </div>
+      
+      {{/if}}
+  </div>
+    </div>
+
 <div class="container">
+
+
+  <div class="typewriter">
+  <h1>{{welcomeMessage}}</h1>
+</div>
   <div class="row">
-    <div class="col l6 welcome-message">
-     {{welcomeMessage}}
-    </div> 
-    <div class="col l6 login">
-     <a href="/login">Login</a>
-    </div> 
+    <div class="row">
+      <div class="row">
+        <div class="row">
+          <div class="row">
+            <div class="row"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col  newsurvey hoverable">
+      <a href="/newSurvey"  style="color:#5d4e60ff;">Create a new Survey</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="row">
+      <div class="row">
+        <div class="row">
+          <div class="row"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row ans">
+    <div class="col l3">
+
+ <form action="/loadSurvey" method="get">
+    <input type="text" name="code" id="" required style="background-color: #d4b2d8ff;">
+    <input type="submit" value="5URV3Y C0D3" style="background-color:#d4b2d8ff">
+    </form>
+
+    </div>
+   
   </div>
   <div class="row">
     <div class="row">
@@ -33,9 +83,18 @@
     </div>
   </div>
   <div class="row">
-    <div class="col l6">
-      <a href="/newSurvey">Create a new Survey</a>
+    <div class="row surveys">
+       Y0UR CR34T3D 5URV3Y5:
     </div>
+    {{#each surveys}}
+   
+      <div class="col">
+        <div class="lmao hoverable">
+          <a href="/responseSurvey/?code={{code}}" style="color:#d4b2d8ff; text-decoration:underline">{{name}}</a>
+        </div>
+      </div>
+ 
+    {{/each}}
   </div>
 </div>
 

@@ -12,48 +12,74 @@
     <title>New Survey</title>
 </head>
 <body>
-    {{>navbar}}
+     <div class="navbar-fixed" style="background-color:#efcefaff">
+         <div class="col l6 login">
+          <div class="c">
+              <a href="/logout" style="color:#5d4e60ff; background-color:#efcefaff">Logout</a>
+          </div>
+     </div>
+     </div>
+      
     <div class="container">
       <div class="row">
         <div class="col l12 header">
             Create a new survey
         </div>
         <div class="col l12 content">
-            {{#if surveyCreated}}   
-               {{Survey.name}}
+            {{#if surveyCreated}}
+               <div class="head">
+                  {{Survey.name}}  ||
                {{code}}
                
+
+               </div>   
+                 <form action="/" method="get">
+              <input type="submit" style="background-color:#d4b2d8ff; font-size:36px; position:relative; float:right;" value ="CREATE SURVEY"/>
+              </form>
+
+
+<br><br>
+
+
        <form action="/newSurvey/" method="GET">
        <input type="hidden" name="code" value={{code}}>
        <input type="hidden" name="QuestionType" value="Short">
-        <input type="submit" value="Add a new short question"/>
+        <input type="submit"style="background-color:#d4b2d8ff; font-size:24px;" value="Add a new short question"/>
        </form>
-  
-
-   <form action="/newSurvey/" method="GET">
-       <input type="hidden" name="code" value={{code}}>
-       <input type="hidden" name="QuestionType" value="MCQ">
-       <input type="submit" value="Add a new MCQ"/>
-      </form>
+<br>
 
 
-              <form action="/surveyCreated" method="post">
-              <input type="submit" value="create survey"/>
-              </form>
+            
               {{#ifEquals quest "MCQ"}} 
                  {{>MCQ}}
               {{/ifEquals}}
                {{#ifEquals quest "Short"}} 
-                      <form action="/addnewShort?code={{code}}" method="POST">
-                      <input type="text" name="question" id="" required>
-                      <input type="submit" value="Confirm"/>
+               <div class="form col l3">
+                  <form action="/addnewShort?code={{code}}" method="POST">
+                      <input type="text" name="question" style="background-color:#EFCEFAFF;"id="" required>
+                      <input type="submit" style="background-color:#d4b2d8ff; font-size:36px; color:#5d4e60ff" value="4DD"/>
                       </form>
+
+               </div>
+                     
               {{/ifEquals}}
               
             {{else}}
-               {{>addSurvey}}
+              <form action="/addSurvey" method="POST">
+<input type="text" name="surveyName" id="" placeholder="Give your survey a name ..." required>
+<input type="submit" style="background-color:#d4b2d8ff; font-size:36px;color:#5d4e60ff"  value="NEXT"/>
+</form>
             {{/if}}
       </div>
+    </div>
+      {{#if questions}}
+        {{#each questions}}
+           <div class="question">
+              <p>Q) {{realQuestion}}</p>
+           </div>
+          {{/each}}
+
+        {{/if}}
     </div>
 </body>
 </html>

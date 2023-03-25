@@ -1,0 +1,13 @@
+:root{
+    --eggplant: #5d4e60ff;
+--mountbatten-pink: #826c7fff;
+--rose-quartz: #a88facff;
+--pink-lavender: #d4b2d8ff;
+--thistle: #efcefaff;
+}
+
+
+.navbar-fixed{
+    background-color: var(--thistle);
+}
+
